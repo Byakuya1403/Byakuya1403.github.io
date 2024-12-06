@@ -13,7 +13,7 @@
   
   <div class="login-container" style="margin-top: 60px;">
     <h1>Registro</h1>
-    <form action="registro.php" method="post">
+    <form id="registrationForm" action="registro_completado.html" method="post">
       <label for="nombre">Nombre</label>
       <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
       
@@ -40,5 +40,15 @@
       </div>
     </form>
   </div>
+
+  <script>
+    // Función para redirigir a la página de "Registro Completado"
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevenir el envío normal del formulario
+      // Aquí puedes agregar lógica adicional para guardar los datos si es necesario
+      window.location.href = 'registro_completado.html'; // Redirigir a la página de registro completado
+    });
+  </script>
 </body>
 </html>
+
