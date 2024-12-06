@@ -1,35 +1,51 @@
 <?php
-if (isset($_POST['register'])) {
-    // Conectar a SQL Server
-    $serverName = "localhost";
-    $connectionOptions = array(
-        "Database" => "AsistenciaDB",
-        "Uid" => "sa", // Usuario
-        "PWD" => "1234" // Contraseña
-        "Puerto" => 1433 // Puerto
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener los datos del formulario
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $empresa = $_POST['empresa'];
+    $email = $_POST['email'];
+    $telefono = $_POST['telefono'];
+    $password = $_POST['password'];
+    $repetirPassword = $_POST['repetir-password'];
 
-    );
-    $conn = sqlsrv_connect( $serverName, $connectionOptions );
-    
-    if( !$conn ) {
-        die( print_r(sqlsrv_errors(), true));
+    // Validar que las contraseñas coincidan
+    if ($password !== $repetirPassword) {
+        echo "Las contraseñas no coinciden. Por favor, inténtelo de nuevo.";
+        exit;
     }
 
-    // Recibe el nombre de usuario y la contraseña
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);  // Se usa hash para la contraseña
-    
-    // Inserta el usuario en la base de datos
-    $query = "INSERT INTO Users (Username, Password) VALUES (?, ?)";
-    $params = array($username, $password);
-    $stmt = sqlsrv_query($conn, $query, $params);
-    
-    if($stmt) {
-        echo "Registro exitoso.";
+    // Conexión a la base de datos
+    $servername = "localhost"; // Cambia según tu configuración
+    $username = "sa"; // Cambia según tu configuración
+    $passwordDB = "1234"; // Cambia según tu configuración
+    $dbname = "AsistenciaDB"; // Cambia según tu configuración
+
+    // Crear la conexión
+    $conn = new mysqli($servername, $username, $passwordDB, $dbname);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Preparar la consulta SQL
+    $sql = "INSERT INTO empleados (nombre, apellido, empresa, email, telefono, contraseña)
+            VALUES (?, ?, ?, ?, ?, ?)";
+
+    // Usar una declaración preparada para evitar inyección SQL
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssss", $nombre, $apellido, $empresa, $email, $telefono, $password);
+
+    // Ejecutar la consulta
+    if ($stmt->execute()) {
+        echo "Registro exitoso para $nombre $apellido.";
     } else {
-        echo "Error al registrar el usuario.";
+        echo "Error al registrar: " . $stmt->error;
     }
 
-    sqlsrv_close($conn);  // Cierra la conexión
+    // Cerrar la conexión
+    $stmt->close();
+    $conn->close();
 }
 ?>
