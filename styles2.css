@@ -1,0 +1,88 @@
+/* Estilos del formulario de login */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .login-container {
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+  }
+  
+  input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn:active {
+    background-color: #004085;
+  }
+  
+  .ribbon {
+    width: 100%; /* Cubre todo el ancho */
+    background-color: #444; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    text-align: center;
+    padding: 15px 0; /* Espaciado vertical */
+    font-size: 24px; /* Tamaño de la fuente grande */
+    font-weight: bold; /* Texto en negritas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+    position: fixed; /* Fija la cinta en la parte superior */
+    top: 0;
+    left: 0;
+    z-index: 10; /* Se asegura de que esté encima del contenido */
+  }

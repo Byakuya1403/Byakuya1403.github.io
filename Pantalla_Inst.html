@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Código QR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <link rel="stylesheet" href="styles3.css">
+    </head>
+<body>
+    <h1>Generador de Código QR</h1>
+    <div class="ribbon">TimeMark</div> <!-- Cinta superior -->    
+
+    <div class="form-group">
+        <label for="title">Título:</label>
+        <input type="text" id="title" placeholder="Ingrese el título">
+    </div>
+    
+    <div class="form-group">
+        <label for="date">Fecha:</label>
+        <input type="date" id="date">
+    </div>
+    
+    <div class="form-group">
+        <label for="duration">Duración (horas):</label>
+        <input type="range" id="duration" min="1" max="24" value="1" oninput="updateDurationValue()">
+        <span id="duration-value">1</span> horas
+    </div>
+    
+    <button id="generate-btn" type="button">Generar Código QR</button>
+    
+    <div id="qr-code"></div>
+
+    <script>
+        // Actualiza el valor de duración mostrado
+        function updateDurationValue() {
+            document.getElementById("duration-value").innerText = document.getElementById("duration").value;
+        }
+
+        // Genera el código QR y envía los datos a otra página
+        function generateQRCode() {
+            const title = document.getElementById("title").value;
+            const date = document.getElementById("date").value;
+            const duration = document.getElementById("duration").value;
+
+            if (!title || !date) {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            // Datos para el código QR
+            const qrData = `Título: ${title}\nFecha: ${date}\nDuración: ${duration} horas`;
+
+            // Generar el código QR
+            const qrCodeContainer = document.getElementById("qr-code");
+            qrCodeContainer.innerHTML = ""; // Limpiar cualquier código QR previo
+            const qr = qrcode(0, "L");
+            qr.addData(qrData);
+            qr.make();
+            qrCodeContainer.innerHTML = qr.createImgTag(4);
+
+            // Enviar los datos a la otra página
+            localStorage.setItem("qrData", qrData);
+            window.open("Pantalla_emp.html", "_blank");
+        }
+
+        // Añadir el evento de clic al botón sin desplazamiento hacia arriba
+        document.getElementById("generate-btn").addEventListener("click", function(event) {
+            event.preventDefault(); // Previene el comportamiento predeterminado del botón
+            generateQRCode(); // Ejecuta la función para generar el QR
+        });
+    </script>
+</body>
+</html>

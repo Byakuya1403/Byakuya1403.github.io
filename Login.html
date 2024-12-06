@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio de Sesión</title>
+  <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form action="login.php" method="post">
+      <label for="email">Correo</label>
+      <input type="email" id="email" name="email" placeholder="Ingresa tu correo" required>
+      
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+      
+      <div class="button-group">
+        <button type="submit" class="btn">Iniciar</button>
+        <button type="button" class="btn" onclick="window.location.href='registro.html'">Registrar</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

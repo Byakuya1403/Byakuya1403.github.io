@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla Emp</title>
+    <link rel="stylesheet" href="styles3.css"> <!-- Ajusta el nombre de tu archivo CSS -->
+</head>
+<body>
+  <div class="ribbon">TimeMark</div> <!-- Cinta superior -->
+    <div class="container">
+        <h1 id="titulo-qr">Cargando título...</h1> <!-- Aquí se mostrará el título -->
+        <p id="fecha-qr">Cargando fecha...</p> <!-- Aquí se mostrará la fecha -->
+        <p id="duracion-qr">Cargando duración...</p> <!-- Aquí se mostrará la duración -->
+        <div id="qr-code"></div> <!-- Aquí se generará el código QR -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <script>
+        // Función para obtener los datos del localStorage
+        function cargarDatos() {
+            // Obtener el contenido guardado en localStorage
+            const qrData = localStorage.getItem("qrData");
+
+            if (qrData) {
+                // Extraer título, fecha y duración del qrData
+                const dataParts = qrData.split("\n");
+                const title = dataParts[0].replace("Título: ", "");
+                const date = dataParts[1].replace("Fecha: ", "");
+                const duration = dataParts[2].replace("Duración: ", "").replace(" horas", "");
+
+                // Mostrar los datos en la página
+                document.getElementById("titulo-qr").innerText = `Título: ${title}`;
+                document.getElementById("fecha-qr").innerText = `Fecha: ${date}`;
+                document.getElementById("duracion-qr").innerText = `Duración: ${duration} horas`;
+
+                // También podemos generar el código QR con los mismos datos
+                generarQRCode(qrData);
+            } else {
+                document.getElementById("titulo-qr").innerText = "No hay datos disponibles.";
+            }
+        }
+
+        // Función para generar el código QR
+        function generarQRCode(qrData) {
+            const qrCodeContainer = document.getElementById("qr-code");
+            qrCodeContainer.innerHTML = ""; // Limpiar cualquier código QR previo
+            const qr = qrcode(0, "L");
+            qr.addData(qrData);
+            qr.make();
+            qrCodeContainer.innerHTML = qr.createImgTag(4); // Se genera el código QR y se coloca en el contenedor
+        }
+
+        // Cargar los datos al cargar la página
+        window.onload = cargarDatos;
+    </script>
+</body>
+</html>
